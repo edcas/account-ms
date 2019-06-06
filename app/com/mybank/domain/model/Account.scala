@@ -2,17 +2,15 @@ package com.mybank.domain.model
 
 import java.util.Date
 
-trait Account {
-
+sealed trait Account {
   def no: String
   def balance: Double
   def openDate: Date
-
 }
 
 case class SavingAccount(no: String, balance: Double, openDate: Date) extends Account
 
-case class CheckinAccount(no: String, balance: Double, openDate: Date) extends Account
+case class CheckingAccount(no: String, balance: Double, openDate: Date) extends Account
 
 object Account extends AccountValidations {
 
@@ -23,10 +21,9 @@ object Account extends AccountValidations {
     }
 
     val result: Either[String, SavingAccount] = for {
-      checkedNo <= checkNo(no)
-      checkedBalance <= checkBalance(balance)
+      checkedNo <- checkNo(no)
+      checkedBalance <- checkBalance(balance)
     } yield SavingAccount(checkedNo, checkedBalance, date)
-
     result
 
   }
