@@ -20,12 +20,22 @@ object Account extends AccountValidations {
       case None => new Date()
     }
 
-    val result: Either[String, SavingAccount] = for {
+    for {
       checkedNo <- checkNo(no)
       checkedBalance <- checkBalance(balance)
     } yield SavingAccount(checkedNo, checkedBalance, date)
-    result
+  }
 
+  def checkingAccount(no: String, balance: Double, openDate: Option[Date]):Either[String, SavingAccount] = {
+    val date: Date = openDate match {
+      case Some(dt) => dt
+      case None => new Date()
+    }
+
+    for {
+      checkedNo <- checkNo(no)
+      checkedBalance <- checkBalance(balance)
+    } yield SavingAccount(checkedNo, checkedBalance, date)
   }
 
 }
