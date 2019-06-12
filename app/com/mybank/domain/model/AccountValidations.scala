@@ -27,4 +27,8 @@ trait AccountValidations {
     else Right( balance )
   }
 
+  def checkRate( rate: BigDecimal ): Either[String, BigDecimal] = {
+    if ( rate <= 0 ) Left( "La tasa de interés debe ser mayor a 0 (cero)" )
+    else Right( rate )
+  }
 }
